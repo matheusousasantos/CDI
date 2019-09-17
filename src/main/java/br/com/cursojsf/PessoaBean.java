@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import javax.inject.Named;
 
 import br.com.dao.DaoGeneric;
 import br.com.entidades.Pessoa;
 import br.com.repository.IDaoPessoa;
-import br.com.repository.IDaoPessoaImpl;
 
-
-@ManagedBean( name = "pessoaBean" )
-@ViewScoped
+@javax.faces.view.ViewScoped
+@Named( value="pessoaBean" )
 public class PessoaBean {
 	
+	@Inject
+	private DaoGeneric<Pessoa> dao;
+	
+	@Inject
+	private IDaoPessoa iDaoPessoa;
+	
 	private Pessoa pessoa = new Pessoa();
-	private DaoGeneric<Pessoa> dao = new DaoGeneric<Pessoa>();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	
-	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
 	
 	public String salvar() {
 		pessoa = dao.merge(pessoa);
